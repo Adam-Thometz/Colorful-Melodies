@@ -6,13 +6,14 @@ body {
 .pick-word {
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
 }
 
 #err {
   color: rgb(201, 0, 0);
 }
 
-#center {
+.center {
   margin-left: auto;
   margin-right: auto;
 }
@@ -52,4 +53,16 @@ td {
 .B {
   background-color: purple;
   color: white;
+}
+
+#wordContainer {
+  font-size: 5rem;
+  text-align: center;
+}
+
+.letter {
+  display: inline-block;
+  padding: 5px 20px 5px 20px;
+  margin-top: 20px;
+  border: 1px solid black;
 }

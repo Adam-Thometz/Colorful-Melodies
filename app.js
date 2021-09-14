@@ -1,15 +1,16 @@
 const pickWord = document.querySelector('.pick-word')
 const table = document.querySelector('.center')
-const wordSubmit = document.querySelector('.word-submit')
+const wordSubmit = document.getElementById('word-submit')
 const err = document.getElementById('err')
+const wordContainer = document.getElementById('wordContainer')
 
-const pitchC = document.querySelectorAll('.C')
-const pitchD = document.querySelectorAll('.D')
-const pitchE = document.querySelectorAll('.E')
-const pitchF = document.querySelectorAll('.F')
-const pitchG = document.querySelectorAll('.G')
-const pitchA = document.querySelectorAll('.A')
-const pitchB = document.querySelectorAll('.B')
+// const pitchC = document.querySelectorAll('.C')
+// const pitchD = document.querySelectorAll('.D')
+// const pitchE = document.querySelectorAll('.E')
+// const pitchF = document.querySelectorAll('.F')
+// const pitchG = document.querySelectorAll('.G')
+// const pitchA = document.querySelectorAll('.A')
+// const pitchB = document.querySelectorAll('.B')
 
 const notes = {
   "C": 261.63,
@@ -22,6 +23,8 @@ const notes = {
 };
 
 function displayWord() {
+  wordContainer.innerHTML = ''
+  
   const word = document.getElementById('word').value
   const letters = /^[A-Za-z]+$/;
   const check = word.match(letters)
@@ -31,27 +34,35 @@ function displayWord() {
     return
   }
 
-  pickWord.innerHTML = `
-    <span>You word you picked was <b>${word}</b></span>
-    <button id="reset">New word</button>`
-  // TODO: Clear the div and display the message 'Your word is ___'
+  document.getElementById('word').value = ''
+  
+  for (let letter of word) {
+    const letterDiv = document.createElement('div')
+    letterDiv.classList.add('letter')
+    letterDiv.innerText = letter.toUpperCase()
+    wordContainer.append(letterDiv)
+  }
 }
 
-function resetWord() {
-  pickWord.innerHTML = `
-    <label for="word">Type a word to turn into a melody</label>
-    <input name="word" id="word">
-    <button class="word-submit">Submit</button>
-    <span id="err"></span>
-  `
-}
-
-function playPitch(e) {
+function playPitch(e) {  
   const note = e.target.className
+  const letter = e.target.textContent
+  // Redo the following if statement, it doesn't work
+  if (wordContainer.contains(document.querySelectorAll('.letter'))) {
+    fillLetter(note, letter)
+  }
   const frequency = notes[note]
   console.log(note, frequency)
 
   // TODO: Attach pitches to cells
+}
+
+function fillLetter(note, letter) {
+  for (let div of document.querySelectorAll('.letter')) {
+    if (div.value === letter) {
+      div.classList.add(note)
+    }
+  }
 }
 
 table.addEventListener('click', playPitch)
