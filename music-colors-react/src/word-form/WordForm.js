@@ -2,20 +2,23 @@ import React, { useState } from "react";
 
 const WordForm = ({ setWord }) => {
   const [wordInput, setWordInput] = useState('');
-  const [error, setError] = useState([])
+  const [error, setError] = useState(null)
 
   const handleChange = e => {
     setWordInput(e.target.value);
   };
 
   const handleEvent = () => {
-    const check = wordInput.match(/^[A-Za-z]+$/);
-    if (!check) {
-      setError("Only letters allowed for now!")
-    } else {
-      setWord(wordInput);
-      setWordInput('');
-    };
+    if (wordInput.length > 45) {
+      setError("Word should be no longer than 45 characters");
+      return;
+    }
+    if (!wordInput.match(/^[A-Za-z]+$/)) {
+      setError("Only letters and words allowed");
+      return;
+    }
+    setWord(wordInput);
+    setWordInput('');
   };
 
   return (
@@ -30,7 +33,7 @@ const WordForm = ({ setWord }) => {
         />
         <button onClick={handleEvent}>Generate word</button>
       </div>
-      <div>
+      <div className="WordForm-error">
         {error ? <span>{error}</span> : null}
       </div>
     </div>
