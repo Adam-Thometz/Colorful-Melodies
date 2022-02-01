@@ -1,5 +1,6 @@
 import React from "react";
 import AlphabetCell from "./AlphabetCell";
+import './AlphabetTable.css'
 
 const AlphabetTable = () => {
   const rows = [
