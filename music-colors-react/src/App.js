@@ -3,6 +3,7 @@ import './App.css';
 import WordForm from './word-form/WordForm';
 import AlphabetTableWord from './alphabet-table-word/AlphabetTableWord';
 import WordContext from './utils/WordContext';
+import { synth } from './utils/synth';
 
 function App() {
   const [wordDisplay, setWordDisplay] = useState([])
@@ -14,6 +15,7 @@ function App() {
       if (letterIdx !== -1) {
         const note = e.target.classList[1];
         setWordDisplay(d => [...d.slice(0, letterIdx), {letter, note}, ...d.slice(letterIdx+1)])
+        synth.triggerAttackRelease(`${note}4`, '4n');
       }
     }
   }
