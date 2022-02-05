@@ -1,18 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState } from 'react';
 import './App.css';
 import WordForm from './word-form/WordForm';
-import AlphabetTable from './alphabet-table/AlphabetTable';
-import Word from './word/Word';
+import AlphabetTableWord from './alphabet-table-word/AlphabetTableWord';
+import WordContext from './utils/WordContext';
 
 function App() {
-  const [word, setWord] = useState('')
+  const [wordDisplay, setWordDisplay] = useState([])
+
+  const colorLetter = e => {
+    if (wordDisplay.length) {
+      const letter = e.target.innerText
+      const letterIdx = wordDisplay.findIndex(block => !block.note && (block.letter === letter))
+      if (letterIdx !== -1) {
+        const note = e.target.classList[1];
+        setWordDisplay(d => [...d.slice(0, letterIdx), {letter, note}, ...d.slice(letterIdx+1)])
+      }
+    }
+  }
 
   return (
-    <div className="App">
-      <WordForm setWord={setWord} />
-      <AlphabetTable />
-      {word ? <Word word={word} /> : null}
-    </div>
+    <WordContext.Provider value={{wordDisplay, setWordDisplay, colorLetter}}>
+      <div className="App">
+        <WordForm />
+        <AlphabetTableWord wordDisplay={wordDisplay} />
+      </div>
+    </WordContext.Provider>
   );
 }
 

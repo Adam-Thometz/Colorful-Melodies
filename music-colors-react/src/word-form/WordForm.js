@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import WordContext from "../utils/WordContext";
 
-const WordForm = ({ setWord }) => {
+const WordForm = () => {
   const [wordInput, setWordInput] = useState('');
   const [error, setError] = useState(null)
+
+  const {setWordDisplay} = useContext(WordContext)
 
   const handleChange = e => {
     setWordInput(e.target.value);
@@ -12,13 +15,19 @@ const WordForm = ({ setWord }) => {
     if (wordInput.length > 45) {
       setError("Word should be no longer than 45 characters");
       return;
-    }
-    if (!wordInput.match(/^[A-Za-z]+$/)) {
+    } else if (!wordInput.match(/^[A-Za-z]+$/)) {
       setError("Only letters and words allowed");
       return;
+    } else {
+      const res = wordInput.toUpperCase().split('').map(letter => {
+        return {
+          letter,
+          note: null
+        }
+      });
+      setWordDisplay(res);
+      setWordInput('');
     }
-    setWord(wordInput);
-    setWordInput('');
   };
 
   return (
