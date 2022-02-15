@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import './App.css';
 import WordForm from './word-form/WordForm';
 import AlphabetTableWord from './alphabet-table-word/AlphabetTableWord';
@@ -7,6 +7,12 @@ import { synth } from './utils/synth';
 
 function App() {
   const [wordDisplay, setWordDisplay] = useState([])
+  const [showPlayer, setShowPlayer] = useState(false);
+
+  useEffect(() => {
+    const check = wordDisplay.every(char => char.note !== null);
+    if (check) setShowPlayer(true);
+  }, [wordDisplay])
 
   const colorLetter = e => {
     if (wordDisplay.length) {
@@ -21,10 +27,10 @@ function App() {
   }
 
   return (
-    <WordContext.Provider value={{wordDisplay, setWordDisplay, colorLetter}}>
+    <WordContext.Provider value={{wordDisplay, setWordDisplay, showPlayer, colorLetter}}>
       <div className="App">
         <WordForm />
-        <AlphabetTableWord wordDisplay={wordDisplay} />
+        <AlphabetTableWord />
       </div>
     </WordContext.Provider>
   );
