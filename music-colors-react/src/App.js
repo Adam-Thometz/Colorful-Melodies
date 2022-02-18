@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     const check = wordDisplay.every(char => char.note !== null);
-    if (check) setShowPlayer(true);
+    check ? setShowPlayer(true) : setShowPlayer(false);
   }, [wordDisplay])
 
   const colorLetter = e => {
