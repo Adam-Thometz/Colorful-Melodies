@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import AlphabetCell from "./AlphabetCell";
-import { rows, notes } from '../../utils/musicAlphabetData'
+import { rows, notes } from '../utils/musicAlphabetData'
 import './AlphabetTable.css'
-import WordContext from "../../utils/WordContext";
+import WordContext from "../utils/WordContext";
 
 const AlphabetTable = () => {
   const { colorLetter } = useContext(WordContext)
